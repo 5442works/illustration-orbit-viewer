@@ -3,11 +3,8 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  // GitHub Pages用のベースパス設定
+  // GitHub Pagesの公開ディレクトリパス
   base: "/illustration-orbit-viewer/",
-  
-  // HTMLファイルやソースコードが入っている client フォルダをプロジェクトルートに設定
-  root: path.resolve(__dirname, "client"),
 
   plugins: [
     react(),
@@ -21,11 +18,11 @@ export default defineConfig({
   },
 
   build: {
-    // root を指定しているため、入力（entry）は client/index.html を指定
     rollupOptions: {
-      input: path.resolve(__dirname, "client", "index.html"),
+      // プロジェクト直下から見た index.html の位置を直接指定
+      input: path.resolve(__dirname, "client/index.html"),
     },
-    // 出力先をプロジェクトルート直下の dist/public に設定
+    // 出力先
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
   },
