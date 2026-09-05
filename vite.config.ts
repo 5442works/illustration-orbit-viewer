@@ -6,7 +6,6 @@ export default defineConfig({
   // GitHub Pagesの公開ディレクトリパス
   base: "/illustration-orbit-viewer/",
 
-  
   plugins: [
     react(),
   ],
@@ -23,8 +22,8 @@ export default defineConfig({
       // プロジェクト直下から見た index.html の位置を直接指定
       input: path.resolve(__dirname, "client/index.html"),
     },
-    // 出力先
-    outDir: path.resolve(__dirname, "dist/public"),
+    // 出力先を dist に変更
+    outDir: path.resolve(__dirname, "dist"),
     emptyOutDir: true,
   },
 });
