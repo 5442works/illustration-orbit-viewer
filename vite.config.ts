@@ -6,6 +6,9 @@ export default defineConfig({
   // GitHub Pagesの公開ディレクトリパス
   base: "/illustration-orbit-viewer/",
 
+  // client フォルダをプロジェクトのルート（起点）に設定
+  root: path.resolve(__dirname, "client"),
+
   plugins: [
     react(),
   ],
@@ -18,12 +21,8 @@ export default defineConfig({
   },
 
   build: {
-    rollupOptions: {
-      // client/index.html をエントリーポイントに指定
-      input: path.resolve(__dirname, "client/index.html"),
-    },
-    // プロジェクトルート直下の dist/public に出力
-    outDir: path.resolve(__dirname, "dist/public"),
+    // root (client) から見て 1つ上の階層の dist/public に出力
+    outDir: "../dist/public",
     emptyOutDir: true,
   },
 });
