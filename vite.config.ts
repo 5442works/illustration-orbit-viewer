@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  // GitHub Pagesの公開ディレクトリパス
   base: "/illustration-orbit-viewer/",
 
   plugins: [
@@ -17,12 +16,11 @@ export default defineConfig({
     },
   },
 
-  // client/index.html をルートとして扱う設定
   root: path.resolve(__dirname, "client"),
 
   build: {
-    // root (client) から見た出力先を指定（プロジェクト直下の dist に出力）
-    outDir: path.resolve(__dirname, "dist"),
+    // GitHub Actions の探している ./dist/public に合わせます
+    outDir: path.resolve(__dirname, "../dist/public"),
     emptyOutDir: true,
   },
 });
