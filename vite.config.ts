@@ -17,12 +17,11 @@ export default defineConfig({
     },
   },
 
+  // client/index.html をルートとして扱う設定
+  root: path.resolve(__dirname, "client"),
+
   build: {
-    rollupOptions: {
-      // プロジェクト直下から見た index.html の位置を直接指定
-      input: path.resolve(__dirname, "client/index.html"),
-    },
-    // 出力先を dist に変更
+    // root (client) から見た出力先を指定（プロジェクト直下の dist に出力）
     outDir: path.resolve(__dirname, "dist"),
     emptyOutDir: true,
   },
