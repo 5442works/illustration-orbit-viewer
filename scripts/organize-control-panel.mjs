@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+const path='/home/ubuntu/illustration-orbit-viewer/client/src/pages/Home.tsx'; let s=fs.readFileSync(path,'utf8');
+s=s.replace('const [showGuide, setShowGuide] = useState(true);','const [showGuide, setShowGuide] = useState(true);\n  const [panelCollapsed, setPanelCollapsed] = useState(false);');
+s=s.replace('<div className="canvas-actions"><button', '<div className="canvas-actions"><button className="panel-toggle" onClick={() => setPanelCollapsed(v => !v)}>{panelCollapsed ? "設定を開く" : "パネルを隠す"}</button><button');
+s=s.replace('<aside className="control-panel">','<aside className={`control-panel ${panelCollapsed ? "collapsed" : ""}`}>');
+const idx=s.indexOf('<aside className={`control-panel');
+if(idx<0) throw new Error('panel not found');
+let head=s.slice(0,idx), tail=s.slice(idx);
+tail=tail.replace('<section className="panel-section upload-section">','<details className="panel-section upload-section" open><summary className="accordion-summary">01　画像 <span>⌄</span></summary>');
+tail=tail.replace('<section className="panel-section"><div className="panel-kicker">02　カメラ</div>','<details className="panel-section" open><summary className="accordion-summary">02　カメラ <span>⌄</span></summary>');
+tail=tail.replace('<section className="panel-section"><div className="panel-kicker">03　画像の見え方</div>','<details className="panel-section" open><summary className="accordion-summary">03　画像の見え方 <span>⌄</span></summary>');
+tail=tail.replace('<section className="panel-section"><div className="panel-kicker">04　構図ガイド</div>','<details className="panel-section" open><summary className="accordion-summary">04　構図ガイド <span>⌄</span></summary>');
+tail=tail.replaceAll('</section>','</details>');
+tail=tail.replace('<div className="metric-row"><span>視野角（パース）</span>','<p className="panel-note camera-note">カメラ距離は被写体との位置、視野角はレンズの広さです。距離を変えず視野角だけ変えると、広角・望遠の違いを確認できます。</p><div className="metric-row"><span>視野角（パース）</span>');
+s=head+tail; fs.writeFileSync(path,s);

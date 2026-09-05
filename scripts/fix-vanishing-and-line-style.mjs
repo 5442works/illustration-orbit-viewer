@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+const path='/home/ubuntu/illustration-orbit-viewer/client/src/pages/Home.tsx'; let s=fs.readFileSync(path,'utf8');
+s=s.replace('const [draggingVanishingIndex, setDraggingVanishingIndex] = useState<number | null>(null);','const [draggingVanishingIndex, setDraggingVanishingIndex] = useState<number | null>(null);\n  const [selectedVanishingIndex, setSelectedVanishingIndex] = useState<number | null>(null);\n  const [guideColor, setGuideColor] = useState("#f1ad62");\n  const [guideWidth, setGuideWidth] = useState(2);');
+s=s.replace('ctx.strokeStyle = "#f1ad62"; ctx.lineWidth = 2; ctx.lineCap = "round";', 'ctx.strokeStyle = guideColor; ctx.lineWidth = guideWidth; ctx.lineCap = "round";');
+s=s.replace('}, [lines, currentLine, drawMode]);','}, [lines, currentLine, drawMode, guideColor, guideWidth]);');
+s=s.replace('setDraggingVanishing(true); setDraggingVanishingIndex(perspectiveMode === "1点" ? 0 : perspectiveMode === "2点" ? i + 1 : i);','setDraggingVanishing(true); const actualIndex = perspectiveMode === "1点" ? 0 : perspectiveMode === "2点" ? i + 1 : i; setDraggingVanishingIndex(actualIndex); setSelectedVanishingIndex(actualIndex);');
+s=s.replace('className="vanishing-handle" style={{ left:', 'className={`vanishing-handle ${selectedVanishingIndex === (perspectiveMode === "1点" ? 0 : perspectiveMode === "2点" ? i + 1 : i) ? "selected" : ""}`} style={{ left:');
+s=s.replace('<span>{perspectiveMode}パース · 消失点を個別にドラッグ</span></div>}', '<span>{perspectiveMode}パース · 消失点を個別にドラッグ</span>{selectedVanishingIndex !== null && <strong className="selected-vanishing-label">選択中：{selectedVanishingIndex === 0 ? "中央消失点" : selectedVanishingIndex === 1 ? "左消失点" : "右消失点"}（{Math.round(vanishingPoints[selectedVanishingIndex].x * 100)}%, {Math.round(vanishingPoints[selectedVanishingIndex].y * 100)}%）</strong>}</div>}');
+const anchor='<label className="toggle-row"><input type="checkbox" checked={drawMode} onChange={e => setDrawMode(e.target.checked)} /> 画像上に補助線を描く</label>';
+const replacement=anchor+'<div className="line-style-row"><label>線の色 <input type="color" value={guideColor} onChange={e => setGuideColor(e.target.value)} /></label><div className="metric-row"><span>線の太さ</span><strong>{guideWidth}px</strong></div><Slider value={[guideWidth]} min={1} max={8} step={1} onValueChange={([v]) => setGuideWidth(v)} /></div>';
+s=s.replace(anchor,replacement);
+fs.writeFileSync(path,s);
