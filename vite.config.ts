@@ -6,6 +6,7 @@ export default defineConfig({
   // GitHub Pagesの公開ディレクトリパス
   base: "/illustration-orbit-viewer/",
 
+  
   plugins: [
     react(),
   ],
